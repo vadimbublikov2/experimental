@@ -1,0 +1,16 @@
+a.b.FooBarBaz
+e.f.FooBar
+c.d.FooBar
+DeviceBarometer
+
+codeborne.WishMaker
+codeborne.MindReader
+
+TelephoneOperator
+ScubaArgentineOperator
+       YoureLeavingUsHere
+   YouveComeToThisPoint
+YourEyesAreSpinningInTheirSockets
+
+MavlinkAutopilotDetector
+WPAutopilotType

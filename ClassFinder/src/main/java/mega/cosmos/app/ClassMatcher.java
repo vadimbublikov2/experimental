@@ -1,6 +1,7 @@
 package mega.cosmos.app;
 
-import static mega.cosmos.app.SplitUtils.*;
+import static mega.cosmos.app.SplitUtils.WILDCARD;
+import static mega.cosmos.app.SplitUtils.splitPatternClassName;
 
 import java.util.List;
 
@@ -9,15 +10,17 @@ public class ClassMatcher {
     public static final String SPACE = " ";
 	
 	final List<String> patternParts;
+	final String patternOriginal;
 
     public ClassMatcher(String pattern) {
-        this.patternParts = splitPattern(pattern);
+        this.patternOriginal = pattern;
+        this.patternParts = splitPatternClassName(pattern);
     }
 
     public boolean match(String classNameOriginal) {
-    	String className = classNameOriginal.trim().substring( Math.max(0, classNameOriginal.lastIndexOf('.')) );    	
-    	List<String> classNameParts = splitClassName(className);
-    	
+    	String className = classNameOriginal.trim().substring( Math.max(0, classNameOriginal.lastIndexOf('.')+1) );    	
+    	List<String> classNameParts = splitPatternClassName(className);
+    	    	
     	while (!classNameParts.isEmpty() && classNameParts.size() >= patternParts.size()) {
     		boolean res = checkRecursive(patternParts, classNameParts, 0);
     		if (res) 
@@ -43,12 +46,12 @@ public class ClassMatcher {
     	return checkRecursive(patternParts, classNameParts, index+1);
     }
     
-    private boolean check(String patternOriginal, String className) {
-    	String pattern = patternOriginal.replace(SPACE, "");
-    	if (!pattern.contains(WILDCARD)) {
-    		return className.startsWith(pattern);
+    private boolean check(String patternOriginal, String className) {    	
+    	if (!patternOriginal.contains(WILDCARD)) {
+    		return (className+SPACE).startsWith(patternOriginal);
     	} else {
-            for (int i = 0; i < className.length(); i++) {
+    		String pattern = patternOriginal.replace(SPACE, "");
+    		for (int i = 0; i < className.length(); i++) {
                 boolean matched = true;
                 boolean wildcarded = false;
                 for (int j = 0; j < pattern.length(); j++) {
@@ -70,7 +73,12 @@ public class ClassMatcher {
                     }
                 }
                 if (matched) {
-                    return true;
+                	if (patternOriginal.endsWith(SPACE) 
+                			&& pattern.charAt(pattern.length()-1) != className.charAt(className.length()-1) ) {
+                		return false;
+                	} else {
+                		return true;
+                	}	
                 } else {
                     continue;
                 }

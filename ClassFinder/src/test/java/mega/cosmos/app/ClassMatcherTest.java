@@ -1,9 +1,7 @@
 package mega.cosmos.app;
+
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-import java.util.List;
 
 public class ClassMatcherTest {
 
@@ -51,8 +49,8 @@ public class ClassMatcherTest {
    @Test
    public void matchHumpOnly() {
 	   ClassMatcher classMatcher =  new ClassMatcher("FSRSI");
-	   assertEquals(classMatcher.match("FlightSessionRootServiceImple"), true);
-	   assertEquals(classMatcher.match("ProjectFlightSessionRootServiceImple"), true);
+	   assertEquals(classMatcher.match("org.mega.kosmos.FlightSessionRootServiceImpl"), true);
+	   assertEquals(classMatcher.match("ProjectFlightSessionRootServiceImpl"), true);
    }
     
    @Test

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+mkdir -p ./bin_test
+javac -cp lib/junit-4.12.jar -d bin_test -sourcepath src src/main/java/mega/cosmos/app/ClassMatcher.java src/main/java/mega/cosmos/app/ClassFinder.java src/main/java/mega/cosmos/app/SplitUtils.java src/test/java/mega/cosmos/app/ClassMatcherTest.java src/test/java/mega/cosmos/app/SplitUtilsTest.java
+java -cp lib/junit-4.12.jar:bin_test org.junit.runner.JUnitCore mega.cosmos.app.ClassMatcherTest mega.cosmos.app.SplitUtilsTest
+rm -rf ./bin_test

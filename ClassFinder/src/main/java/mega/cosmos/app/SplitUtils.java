@@ -1,7 +1,6 @@
 package mega.cosmos.app;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class SplitUtils {
@@ -10,7 +9,7 @@ public class SplitUtils {
 		
 	public static final String WILDCARD = "*";
 	
-    public static List<String> splitPattern(String patternOriginal) {
+    public static List<String> splitPatternClassName(String patternOriginal) {
 	    String pattern =
                 patternOriginal.endsWith(WILDCARD) ? patternOriginal.substring(0,patternOriginal.length()-1) : patternOriginal;
 
@@ -47,26 +46,5 @@ public class SplitUtils {
             splitPatterns.add( stringBuilder.toString() );
 
         return splitPatterns;
-    }
-    
-    public static List<String> splitClassName(String className) {
-    	List<String> classNameParts = new ArrayList<>();
-    	splitClassNameRecursive(classNameParts, className);
-    	Collections.reverse(classNameParts);
-    	return classNameParts;
-    }
-    
-    private static int splitClassNameRecursive(List<String> classNameParts, String className) {
-    	int beginIndex = 0;
-    	for (; beginIndex < className.length(); beginIndex++) {
-    		if ( Character.isUpperCase(className.charAt(beginIndex)) ) {
-    			int offset = splitClassNameRecursive(classNameParts, className.substring(beginIndex+1));
-    			classNameParts.add( className.substring(beginIndex, beginIndex+offset+1) );
-    			return beginIndex;
-    		}
-    	}
-    	return beginIndex;
-    }
-    
-	
+    }    
 }
